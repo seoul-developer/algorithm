@@ -3,6 +3,9 @@
 ## 문제 풀이 현황
 
 - [깃짱의 브랜치](https://github.com/seoul-developer/algorithm/tree/gitchan)
+- [이리내의 브랜치](https://github.com/seoul-developer/algorithm/tree/irene)
+- [훈짱의 브랜치](https://github.com/seoul-developer/algorithm/tree/hoonchan)
+
 
 ## 제출 방식
 
