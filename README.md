@@ -1,5 +1,9 @@
 # 알고리즘 뿌셔보자!
 
+## 문제 풀이 현황
+
+- [깃짱의 브랜치](https://github.com/seoul-developer/algorithm/tree/gitchan)
+
 ## 제출 방식
 
 - 내가 푼 문제를 내 닉네임 이름으로 한 `directory` 아래에 넣어, PULL REQUEST를 만든다.
