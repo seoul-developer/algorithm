@@ -98,7 +98,7 @@ class Solution {
     private static String findWay(final String[][] parks, final int row, final int column, final int rowMovement, final int columnMovement, final int i) {
         try {
             return parks[row + i * rowMovement][column + i * columnMovement];
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException exception) {
             return "X";
         }
     }
