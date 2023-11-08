@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Solution {
-    public static Set<Integer> set = new HashSet<>();
+ public static Set<Integer> set = new HashSet<>();
     public static boolean[] visited;
     public static String[] split;
     public static int max = 0;
@@ -20,13 +20,22 @@ class Solution {
 
         set.remove(1);
         set.remove(0);
-        for(int k = 2; k <= Math.sqrt(max); k++) {
-            for (int j = 2; j * k <= max; j++) {
-                final Integer now = k * j;
-                set.remove(now);
-            }
+        final Set<Integer> copy = new HashSet<>(set);
+        for (Integer integer : copy) {
+            if(set.contains(integer)) {
+                checkPrime(integer);
+            }   
         }
         return set.size();
+    }
+
+    private void checkPrime(final Integer integer) {
+        for(int k = 2; k <= Math.sqrt(integer); k++) {
+            if(integer % k == 0) {
+                set.remove(integer);
+                return;
+            }
+        }
     }
 
     private void pick(int i, final StringBuilder sb) {
