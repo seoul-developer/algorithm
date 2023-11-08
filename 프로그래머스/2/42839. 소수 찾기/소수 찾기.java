@@ -3,10 +3,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Solution {
- public static Set<Integer> set = new HashSet<>();
+    public static Set<Integer> set = new HashSet<>();
     public static boolean[] visited;
     public static String[] split;
-    public static int max = 0;
 
     public int solution(String numbers) {
         split = numbers.split("");
@@ -24,7 +23,7 @@ class Solution {
         for (Integer integer : copy) {
             if(set.contains(integer)) {
                 checkPrime(integer);
-            }   
+            }
         }
         return set.size();
     }
@@ -42,9 +41,6 @@ class Solution {
         if (i == 0) {
             final int n = Integer.parseInt(sb.toString());
             set.add(n);
-            if (max < n) {
-                max = n;
-            }
             return;
         }
         for (int k = 0; k < visited.length; k++) {
