@@ -11,7 +11,7 @@ class Solution {
     public int solution(int n, int[][] wires) {
         length = wires.length;
         visited = new boolean[length];
-        all = findMax(wires);
+        all = n;
 
         for (int i = 0; i < length; i++) {
             int tmpA = wires[i][0];
@@ -25,19 +25,6 @@ class Solution {
             wires[i][1] = tmpB;
         }
         return set.stream().mapToInt(each -> each).min().getAsInt();
-    }
-
-    private int findMax(final int[][] wires) {
-        int max = 0;
-        for (int[] wire : wires) {
-            if (wire[0] > max) {
-                max = wire[0];
-            }
-            if (wire[1] > max) {
-                max = wire[1];
-            }
-        }
-        return max;
     }
 
     public void func(int a, int[][] wires, boolean isStart) {
