@@ -6,7 +6,7 @@ public class Solution {
         int a = sc.nextInt();
         int b = sc.nextInt();
 
-        int result = a + b;
-        System.out.println(a + " + " + b + " = " + result);
+        int res = a + b;
+        System.out.println(a + " + " + b + " = " + res);
     }
 }
