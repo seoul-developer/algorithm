@@ -2,9 +2,10 @@
 
 ## 문제 풀이 현황
 
-- [깃짱의 브랜치](https://github.com/seoul-developer/algorithm/tree/gitchan)
-- [이리내의 브랜치](https://github.com/seoul-developer/algorithm/tree/irene)
-- [훈짱의 브랜치](https://github.com/seoul-developer/algorithm/tree/hoonchan)
+- [깃짱(조은기)의 브랜치](https://github.com/seoul-developer/algorithm/tree/gitchan)
+- [이리내(성채연)의 브랜치](https://github.com/seoul-developer/algorithm/tree/irene)
+- [훈짱(이지훈)의 브랜치](https://github.com/seoul-developer/algorithm/tree/hoonchan)
+- [김현중의 브랜치](https://github.com/seoul-developer/algorithm/tree/hyunjung)
 
 
 ## 제출 방식
