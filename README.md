@@ -4,6 +4,7 @@
 
 - [깃짱(조은기)의 브랜치](https://github.com/seoul-developer/algorithm/tree/gitchan)
 - [이리내(성채연)의 브랜치](https://github.com/seoul-developer/algorithm/tree/irene)
+- [장현우의 브랜치](https://github.com/seoul-developer/algorithm/tree/nowcow)
 - [훈짱(이지훈)의 브랜치](https://github.com/seoul-developer/algorithm/tree/hoonchan)
 - [김현중의 브랜치](https://github.com/seoul-developer/algorithm/tree/hyunjung)
 
