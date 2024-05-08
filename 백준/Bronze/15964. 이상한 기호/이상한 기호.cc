@@ -2,13 +2,13 @@
 
 using namespace std;
 
-long long op(int a, int b){
+long long op(long long a, long long b){
     return (a + b) * (a - b);
 }
 
 int main() {
-    int A, B;
+    long long A, B;
     cin >> A >> B;
 
-    cout << op(A, B);
+    cout << op(A, B) << endl;
 }
