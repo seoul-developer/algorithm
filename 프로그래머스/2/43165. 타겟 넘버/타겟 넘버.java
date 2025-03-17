@@ -1,16 +1,26 @@
 class Solution {
+    private int[] nums;
+    private int t;
+    private int answer;
+    
     public int solution(int[] numbers, int target) {
-        return dfs(0, numbers, target, 0);
+        nums = numbers;
+        t = target;
+        
+        bfs(0, 0);
+        
+        return answer;
     }
     
-    private int dfs(int depth, int[] numbers, int target, int sum){
-        if(depth == numbers.length){
-            if(sum == target){
-                return 1;
+    private void bfs(int step, int sum){
+        if(step == nums.length) {
+            if(sum==t){
+                answer++;
             }
-            return 0;
+            return;
         }
         
-        return dfs(depth + 1, numbers, target, sum + numbers[depth]) + dfs(depth + 1, numbers, target, sum - numbers[depth]);
+        bfs(step+1, sum+nums[step]);
+        bfs(step+1, sum-nums[step]);
     }
 }
