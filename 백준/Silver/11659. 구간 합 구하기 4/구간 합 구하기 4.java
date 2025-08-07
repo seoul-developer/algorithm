@@ -1,31 +1,44 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class Main {
+class Main {
 
-    public static void main(String[] args) throws IOException {
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static int[] values;
+	static int[] cumSum;
 
-        final int n = Integer.parseInt(stringTokenizer.nextToken());
-        final int m = Integer.parseInt(stringTokenizer.nextToken());
+	public static void main(String args[]) throws Exception {
+		StringTokenizer st = new StringTokenizer(br.readLine());
 
-        long[] sum = new long[n + 1];
+		int N = Integer.parseInt(st.nextToken()); // 10만
+		int M = Integer.parseInt(st.nextToken()); // 10만
 
-        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-        for (int i = 1; i <= n; i++) {
-            sum[i] = sum[i - 1] + Integer.parseInt(stringTokenizer.nextToken());
-        }
+		values = new int[N + 1];
+		st = new StringTokenizer(br.readLine());
+		for (int i = 1; i <= N; i++) {
+			values[i] = Integer.parseInt(st.nextToken()); // 1000
+		}
 
-        for (int count = 0; count < m; count++) {
-            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-            final int i = Integer.parseInt(stringTokenizer.nextToken());
-            final int j = Integer.parseInt(stringTokenizer.nextToken());
+		cumSum = new int[N + 1]; // 최대 10만 * 1000 = 1억 < 21억 (int)
+		cumSum[1] = values[1];
+		for (int i = 2; i <= N; i++) {
+			cumSum[i] = cumSum[i - 1] + values[i];
+		}
 
-            final long result = sum[j] - sum[i - 1];
-            System.out.println(result);
-        }
-    }
+		StringBuilder sb = new StringBuilder();
+
+		for (int it = 0; it < M; it++) {
+			st = new StringTokenizer(br.readLine());
+			int i = Integer.parseInt(st.nextToken());
+			int j = Integer.parseInt(st.nextToken());
+
+			sb.append(partialSum(i, j)).append("\n");
+		}
+
+		System.out.println(sb);
+	}
+
+	private static int partialSum(int i, int j) {
+		return cumSum[j] - cumSum[i - 1];
+	}
 }
