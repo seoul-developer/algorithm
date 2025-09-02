@@ -2,61 +2,95 @@ import java.util.*;
 
 class Solution {
     
-    int[][] map = new int[102][102];
-    boolean[][] visited = new boolean[102][102];
-    int[] dx = {1,-1,0,0};
-    int[] dy = {0,0,1,-1};
+    int[][] direction = new int[][]{ {-1,0}, {1,0}, {0,1}, {0,-1} };
     
     public int solution(int[][] rectangle, int characterX, int characterY, int itemX, int itemY) {
-        characterX *= 2;
-        characterY *= 2;
-        itemX *= 2;
-        itemY *= 2;
+        int MAX = 50 * 2;
+        boolean[][] map = new boolean[MAX + 1][MAX + 1];
         
-        // 테두리 그리기
-        for(int[] rec: rectangle) {
-            int x1 = rec[0]*2, y1 = rec[1]*2;
-            int x2 = rec[2]*2, y2 = rec[3]*2;
+        // 모든 부분 채우기
+        for(int[] r: rectangle) {
+            int recX1 = r[0] * 2;
+            int recY1 = r[1] * 2;
+            int recX2 = r[2] * 2;
+            int recY2 = r[3] * 2;
             
-            for(int i=x1; i<=x2; i++){
-                for(int j=y1; j<=y2; j++){
-                    if(i==x1 || i==x2 || j==y1 || j==y2) {
-                        if(map[i][j] != 2) {
-                            // 테두리 => 1
-                            map[i][j]=1;
-                        }
-                    } else{
-                        map[i][j]=2;
-                    }
+            // System.out.printf("x: (%d ~ %d), y: (%d ~ %d)%n", recX1, recX2, recY1, recY2);
+            for(int y=recY1; y<=recY2; y++) {
+                    for(int x=recX1; x<=recX2; x++) {
+                    map[y][x] = true;
                 }
             }
         }
         
-        // BFS
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{characterX, characterY, 0});
-        visited[characterX][characterY] = true;
-        
-        while(!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            int x = cur[0], y = cur[1], dist = cur[2];
+        // 내부 비우기
+        for(int[] r: rectangle) {
+            int recX1 = r[0] * 2;
+            int recY1 = r[1] * 2;
+            int recX2 = r[2] * 2;
+            int recY2 = r[3] * 2;
             
-            if(x==itemX && y==itemY) {
-                return dist/2;
+            // System.out.printf("x: (%d ~ %d), y: (%d ~ %d)%n", recX1, recX2, recY1, recY2);
+            for(int y=recY1 + 1; y<recY2; y++) {
+                    for(int x=recX1 + 1; x<recX2; x++) {
+                    map[y][x] = false;
+                }
+            }
+        }
+        
+        // bfs (chX, chY, dist, visited)
+        Queue<Bfs> queue = new LinkedList<>();
+        queue.offer(new Bfs(characterX * 2, characterY * 2, 0));
+        boolean[][] visited = new boolean[MAX + 1][MAX + 1];
+        visited[characterY*2][characterX*2] = true;
+
+        while (!queue.isEmpty()) {
+            Bfs curr = queue.poll();
+            
+            int x = curr.chX;
+            int y = curr.chY;
+            int dist = curr.dist;
+            
+            if(map[y][x] == false) {
+                continue;
             }
             
-            for(int d=0; d<dx.length; d++) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+            if(x==itemX*2 && y == itemY*2) {
+                return dist / 2;
+            }
+            
+            for(int[] dir: direction) {
+                int dx = dir[0];
+                int dy = dir[1];
                 
-                if(nx>=0 && ny>=0 && nx<=100 && ny<=100){
-                    if(!visited[nx][ny] && map[nx][ny]==1){
-                        visited[nx][ny]=true;
-                        queue.add(new int[]{nx,ny,dist+1});
-                    }
+                int newX = x+dx;
+                int newY = y+dy;
+                
+                if(newX < 0 || newX >= MAX+1 || newY <0 || newY >=MAX+1) {
+                    continue;
                 }
+                
+                if(visited[newY][newX]) {
+                    continue;
+                }
+                
+                visited[newY][newX] = true;
+                queue.offer(new Bfs(newX, newY, dist+1));
             }
         }
+
         return 0;
+    }
+}
+
+class Bfs {
+    int chX; 
+    int chY; 
+    int dist; 
+    
+    public Bfs (int chX, int chY, int dist) {
+        this.chX = chX;
+        this.chY = chY;
+        this.dist = dist;
     }
 }
