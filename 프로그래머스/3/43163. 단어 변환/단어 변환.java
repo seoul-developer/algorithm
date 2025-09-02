@@ -1,54 +1,59 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 class Solution {
-
     public int solution(String begin, String target, String[] words) {
-        char[] end = target.toCharArray();
-        final LinkedList<ArrayList<String>> queue = new LinkedList<>();
-        final ArrayList<String> first = new ArrayList<>();
-        first.add(begin); // 글자
-        first.add(String.valueOf(0)); // 단계
-        queue.offer(first);
-
-        Set<String> visited = new HashSet<>();
-        visited.add(begin);
-
+        // BFS (현재 단어, 지나온 단어 visited, 지나온 스텝 수)
+        Queue<Bfs> queue = new LinkedList<>();
+        queue.offer(new Bfs(begin, new boolean[words.length], 0));
+        
         while (!queue.isEmpty()) {
-            final ArrayList<String> poll = queue.poll();
-
-            char[] tmp = poll.get(0).toCharArray();
-            int cnt = Integer.parseInt(poll.get(1));
-
-            if (poll.get(0).equals(target)) {
-                return cnt;
+            Bfs curr = queue.poll();
+            
+            String word = curr.word;
+            if(word.equals(target)) {
+                return curr.steps;
             }
-
-            for (final String word : words) {
-                boolean changeable = calculateDiff(tmp, word.toCharArray()) == 1;
-
-                if (!visited.contains(word) && changeable) {
-                    ArrayList<String> next = new ArrayList<>();
-                    next.add(word);
-                    next.add(String.valueOf(cnt + 1));
-                    queue.offer(next);
-                    visited.add(word);
+            
+            boolean[] visited = curr.visited;
+            
+            for(int i=0; i<words.length; i++) {
+                String next = words[i];
+                if(visited[i] == false && changeable(word, next)) {
+                    // System.out.printf("curr: %s, next: %s, step: %d%n", word, next, curr.steps);
+                    boolean[] newVisited = visited.clone();
+                    newVisited[i] = true;
+                    queue.offer(new Bfs(next, newVisited, curr.steps + 1));
                 }
             }
         }
-
+        
         return 0;
     }
-
-    private int calculateDiff(final char[] start, final char[] end) {
-        int diff = 0;
-        for (int i = 0; i < start.length; i++) {
-            if (start[i] != end[i]) {
-                diff++;
+    
+    private boolean changeable(String s1, String s2) {
+        char[] a = s1.toCharArray();
+        char[] b = s2.toCharArray();
+        
+        int diffCnt = 0;
+        for(int i=0; i<a.length; i++) {
+            if(a[i] != b[i]) {
+                diffCnt++;
             }
         }
-        return diff;
+        
+        return diffCnt == 1;
+    }
+}
+
+class Bfs {
+    // (현재 단어, 지나온 단어 visited, 지나온 스텝 수)
+    String word;
+    boolean[] visited;
+    int steps;
+    
+    public Bfs(String word, boolean[] visited, int steps) {
+        this.word = word;
+        this.visited = visited;
+        this.steps = steps;
     }
 }
