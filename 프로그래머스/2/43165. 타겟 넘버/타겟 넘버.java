@@ -1,26 +1,27 @@
 class Solution {
-    private int[] nums;
-    private int t;
-    private int answer;
+    
+    private int[] numbers;
+    private int target;
+    private int answer = 0;
     
     public int solution(int[] numbers, int target) {
-        nums = numbers;
-        t = target;
-        
-        bfs(0, 0);
+        this.numbers = numbers;
+        this.target = target;
+        // 현재까지 더한 결과, 다음 정해야 할 숫자
+        dfs(0, 0);
         
         return answer;
     }
     
-    private void bfs(int step, int sum){
-        if(step == nums.length) {
-            if(sum==t){
-                answer++;
+    private void dfs(int sum, int idx) {
+        if (idx == numbers.length) {
+            if(sum == target) {
+                answer++;    
             }
             return;
         }
         
-        bfs(step+1, sum+nums[step]);
-        bfs(step+1, sum-nums[step]);
+        dfs(sum + numbers[idx], idx + 1);
+        dfs(sum - numbers[idx], idx + 1);
     }
 }
