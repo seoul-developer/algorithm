@@ -3,11 +3,12 @@ import java.util.*;
 
 public class Main {
 
+	private static final int ROOT = 1;
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) throws IOException {
-		int N = Integer.parseInt(br.readLine());
+		int N = Integer.parseInt(br.readLine()); // 10만
 
 		List<List<Integer>> graph = new ArrayList<>();
 		for (int i = 0; i <= N; i++) {
@@ -15,8 +16,10 @@ public class Main {
 		}
 
 		StringTokenizer st;
-		for (int it = 0; it < N - 1; it++) {
-			st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < N - 1; i++) {
+			String input = br.readLine();
+			st = new StringTokenizer(input);
+
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 
@@ -24,29 +27,27 @@ public class Main {
 			graph.get(b).add(a);
 		}
 
-		int root = 1;
-
 		int[] parents = new int[N + 1];
 
+		Queue<Integer> queue = new LinkedList<>();
 		boolean[] visited = new boolean[N + 1];
-		Queue<int[]> queue = new LinkedList<>();
-		queue.offer(new int[] { 1, -1 });
-		visited[1] = true;
+
+		queue.offer(ROOT);
+		visited[ROOT] = true;
 
 		while (!queue.isEmpty()) {
-			int[] curr = queue.poll();
-			int idx = curr[0];
-			int parent = curr[1];
+			int curr = queue.poll();
 
-			parents[idx] = parent;
-
-			for (int next : graph.get(idx)) {
-				if (visited[next]) {
+			List<Integer> next = graph.get(curr);
+//			System.out.printf("curr: %d, next: %s%n", curr, next.toString());
+			for (int it : next) {
+				if (visited[it]) {
 					continue;
 				}
 
-				visited[next] = true;
-				queue.offer(new int[] { next, idx });
+				parents[it] = curr;
+				visited[it] = true;
+				queue.offer(it);
 			}
 		}
 
