@@ -4,75 +4,65 @@ import java.util.*;
 public class Main {
 
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringBuilder sb = new StringBuilder();
 	private static int[] parents;
 
 	public static void main(String[] args) throws IOException {
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int V = Integer.parseInt(st.nextToken()); // 1만
-		int E = Integer.parseInt(st.nextToken()); // 10만
-
-		List<List<int[]>> graph = new ArrayList<>();
-		for (int i = 0; i <= V; i++) {
-			graph.add(new ArrayList<>());
-		}
+		int V = Integer.parseInt(st.nextToken());
+		int E = Integer.parseInt(st.nextToken());
 
 		List<int[]> edges = new ArrayList<>();
 
 		for (int i = 0; i < E; i++) {
 			st = new StringTokenizer(br.readLine());
-			int A = Integer.parseInt(st.nextToken());
-			int B = Integer.parseInt(st.nextToken());
-			int C = Integer.parseInt(st.nextToken());
 
-			graph.get(A).add(new int[] { B, C });
-			graph.get(B).add(new int[] { A, C });
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
 
-			edges.add(new int[] { A, B, C });
+			edges.add(new int[] { a, b, c });
 		}
 
-		Collections.sort(edges, (a, b) -> (a[2] - b[2]));
-
+		int res = 0;
 		int cnt = 0;
-		int ans = 0;
 
 		parents = new int[V + 1];
 		for (int i = 1; i <= V; i++) {
 			parents[i] = i;
 		}
 
-		for (int i = 0; i < edges.size(); i++) {
+		Collections.sort(edges, (a, b) -> a[2] - b[2]);
+
+		for (int[] edge : edges) {
 			if (cnt == V - 1) {
 				break;
 			}
 
-			int[] edge = edges.get(i);
-			int s = edge[0];
-			int d = edge[1];
-			int weight = edge[2];
+			int a = edge[0];
+			int b = edge[1];
+			int w = edge[2];
 
-			int parS = findParent(s);
-			int parD = findParent(d);
-
-			if (parS == parD) {
+			int parentA = findParent(a);
+			int parentB = findParent(b);
+			if (parentA == parentB) {
 				continue;
 			} else {
-				// 스패닝 트리에 추가
-				parents[parD] = parS;
+				res += w;
 				cnt++;
-				ans += weight;
+				parents[parentB] = parentA;
 			}
 		}
 
-		System.out.println(ans);
+		System.out.println(res);
 	}
 
-	private static int findParent(int s) {
-		if (parents[s] == s) {
-			return s;
+	private static int findParent(int v) {
+		if (parents[v] == v) {
+			return v;
 		}
-
-		int par = findParent(parents[s]);
-		parents[s] = par;
-		return par;
+		int parent = findParent(parents[v]);
+		parents[v] = parent;
+		return parent;
 	}
 }
